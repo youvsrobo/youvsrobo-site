@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://youvsrobo.com/</loc></url>
-<url><loc>https://youvsrobo.com/challenges.html</loc></url>
-<url><loc>https://youvsrobo.com/join.html</loc></url>
-<url><loc>https://youvsrobo.com/consent.html</loc></url>
-<url><loc>https://youvsrobo.com/media.html</loc></url>
-<url><loc>https://youvsrobo.com/about.html</loc></url>
-<url><loc>https://youvsrobo.com/contact.html</loc></url>
-<url><loc>https://youvsrobo.com/legal.html</loc></url>
-</urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://youvsrobo.com/index.html</loc></url><url><loc>https://youvsrobo.com/about.html</loc></url><url><loc>https://youvsrobo.com/join.html</loc></url><url><loc>https://youvsrobo.com/contact.html</loc></url><url><loc>https://youvsrobo.com/legal.html</loc></url><url><loc>https://youvsrobo.com/media.html</loc></url></urlset>
