@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080711">
+  <meta name="description" content="جرّب ROBO ودع أرقامك تقرر طلبك"><link rel="icon" href="assets/robo-wordmark.webp" type="image/webp"><link rel="stylesheet" href="styles.css">
+  <title>جرّب ROBO | YOU VS ROBO</title>
+</head>
+<body>
+<a class="skip" href="#main">تجاوز إلى المحتوى</a>
+<header class="topbar"><div class="wrap nav"><a class="brand" href="index.html" aria-label="ROBO"><img src="assets/you-vs-robo.webp" alt="YOU VS ROBO"></a><nav id="navlinks" class="navlinks" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="audience.html" class="active">جرّب ROBO</a><a href="restaurants.html">المطاعم</a><a href="creators.html">صنّاع المحتوى</a><a href="contact.html">تواصل</a></nav><div class="nav-actions"><button class="menu" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="القائمة">☰</button></div></div></header>
+
+<main id="main">
+  <section class="page-head wrap">
+    <div class="eyebrow">ROBO DECIDES</div>
+    <h1><span class="gradient-text">خلّ أرقامك تقرر طلبك.</span></h1>
+    <p>أدخل نسبة البطارية وعدد متابعيك، ويستخدم ROBO الدقيقة الحالية ليصنع لك تجربة طعام واضحة.</p>
+  </section>
+
+  <section class="section compact">
+    <div class="wrap">
+      <div class="process-grid">
+        <article class="process-card"><b>01 · البطارية</b><p>آخر رقم يحدد نوع الأكل.</p></article>
+        <article class="process-card"><b>02 · المتابعون</b><p>آخر رقم يحدد طريقة اختيار المطعم.</p></article>
+        <article class="process-card"><b>03 · الدقيقة</b><p>آخر رقم يحدد اختيار الطبق.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap choice-panel">
+      <div class="eyebrow">START THE EXPERIMENT</div>
+      <h2>رقمان منك. والثالث من الوقت.</h2>
+      <p class="micro">يأخذ ROBO آخر رقم من كل معلومة، ويركّب منها نتيجة واحدة. النتيجة نفسها تظهر دائمًا للأرقام نفسها.</p>
+      <form id="robo-form" class="robo-game">
+        <div class="game-grid">
+          <div class="field"><label for="battery">نسبة البطارية</label><input id="battery" name="battery" type="number" min="0" max="100" inputmode="numeric" placeholder="مثال: 47" required></div>
+          <div class="field"><label for="followers">عدد متابعيك</label><input id="followers" name="followers" type="number" min="0" inputmode="numeric" placeholder="مثال: 1333" required></div>
+        </div>
+        <div class="minute-box"><div><strong id="current-minute">00</strong></div><div><b>الدقيقة الآن</b><br><span class="micro">يحددها ROBO تلقائيًا</span></div></div>
+        <button class="btn primary full" type="submit">اعرض قرار ROBO</button>
+      </form>
+
+      <div id="result" class="result-panel" hidden aria-live="polite">
+        <div class="eyebrow">ROBO RESULT</div><h2>قرار ROBO</h2>
+        <div class="result-grid">
+          <div class="result-item"><span>نوع الأكل</span><strong id="food-result"></strong></div>
+          <div class="result-item"><span>اختيار المطعم</span><strong id="restaurant-result"></strong></div>
+          <div class="result-item"><span>اختيار الطبق</span><strong id="dish-result"></strong></div>
+        </div>
+        <div class="score-line"><div><b>المجموع</b><p id="win-message" class="micro"></p></div><div id="total-points" class="score-value"></div></div>
+        <div class="game-actions"><button id="explain" class="btn ghost" type="button">كيف حسبها ROBO؟</button><button id="again" class="btn outline" type="button">جرّب أرقامًا أخرى</button></div>
+      </div>
+
+      <div id="matrix-wrap" class="matrix-wrap" hidden>
+        <table id="matrix-table" class="matrix-table">
+          <thead><tr><th>آخر رقم</th><th>نوع الأكل</th><th>اختيار المطعم</th><th>اختيار الطبق</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section compact"><div class="wrap statement"><div class="eyebrow">ROBO CHALLENGES</div><h2>ROBO لا يختار فقط…</h2><p>أحيانًا يحوّل الطلب إلى تحدٍّ غير متوقع، بحسب المنيو والتجربة.</p></div></section>
+</main>
+
+<footer class="footer"><div class="wrap footer-inner"><div class="footer-brand"><img src="assets/you-vs-robo.webp" alt="YOU VS ROBO"><p>© 2026 ROBO · YouvsRobo.com</p></div><div class="footer-side"><div class="footer-links"><a href="terms.html">شروط الاستخدام</a><a href="participation.html">شروط المشاركة</a><a href="privacy.html">سياسة الخصوصية</a><a href="faq.html">الأسئلة العامة</a></div><div class="social-icons"><a href="https://www.tiktok.com/@youvsrobo" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="assets/tiktok.svg" alt="TikTok"></a><a href="https://www.instagram.com/youvsrobo/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/instagram.svg" alt="Instagram"></a><a href="https://www.youtube.com/@youvsrobo" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="assets/youtube.svg" alt="YouTube"></a></div><div class="footer-contact"><a href="mailto:hello@youvsrobo.com">hello@youvsrobo.com</a><a class="wa-direct" href="https://wa.me/966551932032" target="_blank" rel="noopener noreferrer">واتساب مباشر</a></div></div></div></footer>
+<script src="app.js"></script>
+</body>
+</html>

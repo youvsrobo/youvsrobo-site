@@ -1,61 +1,139 @@
 'use strict';
-const LANG_KEY='robo-language';
-const DOCS=Object.freeze({
-  guide:{file:'files/ROBO_Experience_Guide_AR.pdf',ar:'دليل تجربة ROBO',en:'ROBO Experience Guide',back:'join.html'},
-  participation:{file:'files/ROBO_Participation_Terms_Privacy_AR.pdf',ar:'شروط المشاركة والخصوصية',en:'Participation Terms & Privacy',back:'join.html'},
-  privacy:{file:'files/ROBO_Privacy_Policy_AR.pdf',ar:'سياسة خصوصية ROBO',en:'ROBO Privacy Policy',back:'legal.html'},
-  use:{file:'files/ROBO_Terms_of_Use_AR.pdf',ar:'شروط استخدام ROBO',en:'ROBO Terms of Use',back:'legal.html'}
-});
-function currentLang(){return document.documentElement.lang==='en'?'en':'ar';}
-function setLanguage(language){
-  const lang=language==='en'?'en':'ar';
-  document.documentElement.lang=lang;
-  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
-  document.querySelectorAll('[data-ar][data-en]').forEach(node=>{
-    node.textContent=node.getAttribute('data-'+lang);
-  });
-  document.querySelectorAll('.lang').forEach(button=>{button.textContent=lang==='ar'?'EN':'عربي';});
-  const title=document.getElementById('pdfTitle');
-  if(title && title.dataset.docKey && DOCS[title.dataset.docKey]) title.textContent=DOCS[title.dataset.docKey][lang];
-  try{localStorage.setItem(LANG_KEY,lang);}catch(_e){}
-}
-function initViewer(){
-  const frame=document.getElementById('pdfFrame');if(!frame)return;
-  const key=new URLSearchParams(location.search).get('doc');
-  // Explicit whitelist prevents URL or path traversal through query parameters.
-  const doc=Object.prototype.hasOwnProperty.call(DOCS,key)?DOCS[key]:null;
-  if(!doc){location.replace('legal.html');return;}
-  const title=document.getElementById('pdfTitle');title.dataset.docKey=key;title.textContent=doc[currentLang()];
-  frame.src=doc.file+'#toolbar=1&navpanes=0';
-  document.getElementById('pdfDownload').href=doc.file;
-  document.getElementById('pdfDirect').href=doc.file;
-  document.getElementById('goBack').addEventListener('click',()=>{
-    let sameOrigin=false;
-    try{sameOrigin=!!document.referrer && new URL(document.referrer).origin===location.origin;}catch(_e){}
-    if(sameOrigin && history.length>1)history.back();else location.href=doc.back;
-  });
-}
-function initForm(){
-  const form=document.getElementById('participationForm');if(!form)return;
-  const endpoint=window.ROBO_CONFIG&&window.ROBO_CONFIG.sheetsEndpoint;
-  if(typeof endpoint==='string' && /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(endpoint)){
-    form.action=endpoint;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const menu = document.querySelector('.menu');
+  const nav = document.querySelector('.navlinks');
+
+  if (menu && nav) {
+    menu.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      menu.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        menu.setAttribute('aria-expanded', 'false');
+      });
+    });
   }
-  form.addEventListener('submit',e=>{
-    const email=form.querySelector('#email');
-    const marketing=form.querySelector('input[name="marketing_consent"]');
-    if(marketing.checked && !email.value.trim()){
-      e.preventDefault();email.setCustomValidity(currentLang()==='ar'?'أدخل بريدك الإلكتروني للاشتراك.':'Enter your email to subscribe.');email.reportValidity();return;
-    }
-    email.setCustomValidity('');
-  });
-  form.querySelector('#email').addEventListener('input',e=>e.target.setCustomValidity(''));
-}
-document.addEventListener('DOMContentLoaded',()=>{
-  let saved='ar';try{saved=localStorage.getItem(LANG_KEY)||'ar';}catch(_e){}
-  setLanguage(saved);
-  document.querySelectorAll('.lang').forEach(b=>b.addEventListener('click',()=>setLanguage(currentLang()==='ar'?'en':'ar')));
-  const menu=document.querySelector('.menu'),nav=document.querySelector('.navlinks');
-  if(menu&&nav){menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}));}
-  initViewer();initForm();
+
+  initRoboGame();
 });
+
+function initRoboGame() {
+  const form = document.getElementById('robo-form');
+  if (!form) return;
+
+  const food = [
+    ['برجر أو ساندويتش', 1],
+    ['أكل سعودي', 2],
+    ['أكل عربي', 2],
+    ['بيتزا أو باستا', 2],
+    ['أكل آسيوي', 3],
+    ['فطور', 3],
+    ['مأكولات بحرية', 3],
+    ['حلى أو مقهى', 3],
+    ['مطبخ لم تجربه من قبل', 4],
+    ['ROBO يختار نوع الأكل', 5]
+  ];
+
+  const restaurants = [
+    ['أقرب مطعم', 1],
+    ['مطعم تختاره أنت', 1],
+    ['صديقك يختار', 2],
+    ['شخص معك يختار', 2],
+    ['مطعم محفوظ عندك', 2],
+    ['خامس مطعم في البحث', 3],
+    ['مطعم جديد في منطقتك', 3],
+    ['مطعم لم تزره من قبل', 4],
+    ['اختر ثلاثة وROBO يقرر', 4],
+    ['ROBO يختار المطعم', 5]
+  ];
+
+  const dishes = [
+    ['الأكثر طلبًا', 1],
+    ['أول طبق في القسم', 1],
+    ['ثالث طبق', 2],
+    ['خامس طبق', 3],
+    ['ترشيح الموظف', 3],
+    ['طبق لم تجربه', 3],
+    ['صديقك يختار الطبق', 3],
+    ['أغرب طبق في المنيو', 4],
+    ['اختيار الشيف المفاجئ', 4],
+    ['ROBO يختار الطبق', 5]
+  ];
+
+  const currentMinute = document.getElementById('current-minute');
+  const result = document.getElementById('result');
+  const matrix = document.getElementById('matrix-wrap');
+  const tableBody = document.querySelector('#matrix-table tbody');
+
+  const refreshMinute = () => {
+    currentMinute.textContent = String(new Date().getMinutes()).padStart(2, '0');
+  };
+  refreshMinute();
+  window.setInterval(refreshMinute, 30000);
+
+  for (let digit = 0; digit < 10; digit += 1) {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${digit}</td>
+      <td data-col="food" data-digit="${digit}"><div class="cell-choice"><span>${food[digit][0]}</span><small>${food[digit][1]} نقطة</small></div></td>
+      <td data-col="restaurant" data-digit="${digit}"><div class="cell-choice"><span>${restaurants[digit][0]}</span><small>${restaurants[digit][1]} نقطة</small></div></td>
+      <td data-col="dish" data-digit="${digit}"><div class="cell-choice"><span>${dishes[digit][0]}</span><small>${dishes[digit][1]} نقطة</small></div></td>
+    `;
+    tableBody.appendChild(row);
+  }
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const battery = Number(document.getElementById('battery').value);
+    const followers = Number(document.getElementById('followers').value);
+    const minute = new Date().getMinutes();
+    const digits = {
+      food: battery % 10,
+      restaurant: followers % 10,
+      dish: minute % 10
+    };
+    const choices = {
+      food: food[digits.food],
+      restaurant: restaurants[digits.restaurant],
+      dish: dishes[digits.dish]
+    };
+    const total = choices.food[1] + choices.restaurant[1] + choices.dish[1];
+    const remaining = 10 - total;
+
+    document.getElementById('food-result').textContent = choices.food[0];
+    document.getElementById('restaurant-result').textContent = choices.restaurant[0];
+    document.getElementById('dish-result').textContent = choices.dish[0];
+    document.getElementById('total-points').textContent = total + ' / 15';
+    document.getElementById('win-message').textContent = total >= 10
+      ? 'هزمت ROBO هذه الجولة 🤖'
+      : 'هذه الجولة لـROBO… تحتاج إلى ' + remaining + (remaining === 1 ? ' نقطة إضافية' : ' نقاط إضافية');
+
+    document.querySelectorAll('#matrix-table td').forEach(cell => cell.classList.remove('selected-cell'));
+    Object.entries(digits).forEach(([column, digit]) => {
+      const cell = document.querySelector(`#matrix-table td[data-col="${column}"][data-digit="${digit}"]`);
+      if (cell) cell.classList.add('selected-cell');
+    });
+
+    form.hidden = true;
+    result.hidden = false;
+    matrix.hidden = true;
+    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  document.getElementById('explain').addEventListener('click', () => {
+    matrix.hidden = false;
+    matrix.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('again').addEventListener('click', () => {
+    result.hidden = true;
+    matrix.hidden = true;
+    form.hidden = false;
+    form.reset();
+    document.querySelectorAll('#matrix-table td').forEach(cell => cell.classList.remove('selected-cell'));
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
