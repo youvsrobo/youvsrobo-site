@@ -2,68 +2,314 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080711">
-  <meta name="description" content="جرّب ROBO ودع أرقامك تقرر طلبك"><link rel="icon" href="assets/robo-wordmark.webp" type="image/webp"><link rel="stylesheet" href="styles.css">
+  <meta name="description" content="أدر عجلات ROBO الثلاث واكتشف تحدي العشاء"><link rel="icon" href="assets/robo-wordmark.webp" type="image/webp"><link rel="stylesheet" href="styles.css">
   <title>جرّب ROBO | YOU VS ROBO</title>
+<style>
+    #main.robo-dinner {
+      color-scheme: dark;
+      --bg: #090713;
+      --panel: #131020;
+      --panel-2: #1b1630;
+      --purple: #a855f7;
+      --purple-2: #7026d9;
+      --cyan: #21d9e8;
+      --pink: #ed4dcb;
+      --text: #fbf9ff;
+      --muted: #b9b3c9;
+      --line: rgba(255,255,255,.1);
+      --glow: 0 0 30px rgba(133,61,239,.18);
+    }
+    #main.robo-dinner * { box-sizing: border-box; }
+    #main.robo-dinner {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 0%, rgba(105,42,185,.22), transparent 42%), var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      line-height: 1.65;
+    }
+    #main.robo-dinner button { font: inherit; }
+    #main.robo-dinner .shell { width: min(1100px, calc(100% - 32px)); margin: auto; }
+    #main.robo-dinner { padding: 42px 0 64px; }
+    #main.robo-dinner .intro { text-align:center; max-width:720px; margin:0 auto 28px; }
+    #main.robo-dinner .eyebrow { color:var(--cyan); font-weight:800; font-size:13px; letter-spacing:.04em; }
+    #main.robo-dinner h1 { margin:7px 0 9px; font-size:clamp(30px,5vw,48px); line-height:1.2; }
+    #main.robo-dinner .intro p { margin:0; color:var(--muted); }
+    #main.robo-dinner .stage {
+      display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,.83fr); gap:24px;
+      align-items:center; padding:24px; border:1px solid rgba(168,85,247,.25);
+      border-radius:26px; background:linear-gradient(145deg,rgba(26,20,44,.96),rgba(12,10,20,.96));
+      box-shadow:var(--glow);
+    }
+    #main.robo-dinner .wheel-side { min-width:0; }
+    #main.robo-dinner .wheel-legend { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:0 0 12px; }
+    #main.robo-dinner .legend-chip { display:flex; align-items:center; gap:7px; padding:6px 10px; border:1px solid var(--line); border-radius:999px; color:#eee9f8; font-size:12px; }
+    #main.robo-dinner .dot { width:9px;height:9px;border-radius:50%;display:inline-block; }
+    #main.robo-dinner .dot-law {background:var(--pink)}
+    #main.robo-dinner .dot-restaurant {background:var(--purple)}
+    #main.robo-dinner .dot-dish {background:var(--cyan)}
+    #main.robo-dinner .wheel-box { width:min(100%,520px); margin:auto; position:relative; aspect-ratio:1; }
+    #main.robo-dinner svg { width:100%;height:100%; overflow:visible; display:block; }
+    #main.robo-dinner .ring { transform-box:view-box; transform-origin:300px 300px; transition:transform 4.2s cubic-bezier(.11,.74,.12,1); }
+    #main.robo-dinner .ring path { stroke:#100c1b; stroke-width:2.2; }
+    #main.robo-dinner .ring text { fill:white; font-weight:900; text-anchor:middle; dominant-baseline:middle; font-size:21px; direction:ltr; }
+    #main.robo-dinner .outer path { fill:#472079; }
+    #main.robo-dinner .outer path:nth-of-type(even) { fill:#5b2692; }
+    #main.robo-dinner .middle path { fill:#075765; }
+    #main.robo-dinner .middle path:nth-of-type(even) { fill:#087080; }
+    #main.robo-dinner .inner path { fill:#782681; }
+    #main.robo-dinner .inner path:nth-of-type(even) { fill:#922d9d; }
+    #main.robo-dinner .ring-outline { fill:none; stroke:rgba(255,255,255,.72); stroke-width:2; }
+    #main.robo-dinner .ring-glow { fill:none; stroke-width:8; opacity:.8; filter:drop-shadow(0 0 7px currentColor); }
+    #main.robo-dinner .pointer { fill:#f8fbff; stroke:var(--cyan); stroke-width:4; filter:drop-shadow(0 0 9px rgba(33,217,232,.75)); }
+    #main.robo-dinner .hub { fill:#100c1b; stroke:var(--cyan); stroke-width:4; }
+    #main.robo-dinner .hub-text { fill:#fff; font-size:18px; font-weight:900; text-anchor:middle; dominant-baseline:middle; }
+    #main.robo-dinner .wheel-copy { text-align:center; color:var(--muted); font-size:12px; margin:5px 0 0; }
+    #main.robo-dinner .result-panel { padding:22px; border:1px solid var(--line); border-radius:20px; background:rgba(8,7,17,.56); }
+    #main.robo-dinner .result-panel h2 { margin:0 0 5px; font-size:22px; }
+    #main.robo-dinner .result-help { margin:0 0 16px; color:var(--muted); font-size:13px; }
+    #main.robo-dinner .pick { display:grid; grid-template-columns:96px 1fr auto; align-items:start; gap:10px; padding:11px 0; border-bottom:1px solid var(--line); }
+    #main.robo-dinner .pick:last-of-type { border-bottom:0; }
+    #main.robo-dinner .pick-label { color:var(--muted); font-size:13px; }
+    #main.robo-dinner .pick-value { font-weight:700; font-size:14px; }
+    #main.robo-dinner .pick-number { color:var(--cyan); font-size:12px; font-weight:800; }
+    #main.robo-dinner .decision { margin:16px 0 0; padding:13px 14px; border-radius:14px; background:rgba(112,38,217,.18); border:1px solid rgba(168,85,247,.28); font-size:14px; }
+    #main.robo-dinner .score { color:var(--cyan); font-weight:900; }
+    #main.robo-dinner .spin-button {
+      width:100%; margin-top:18px; border:0; border-radius:14px; padding:13px 18px;
+      background:linear-gradient(100deg,#20d8e8,#58e5ed); color:#071216; font-weight:950;
+      box-shadow:0 7px 24px rgba(33,217,232,.18); cursor:pointer; transition:transform .18s,filter .18s;
+    }
+    #main.robo-dinner .spin-button:hover { transform:translateY(-2px); filter:brightness(1.06); }
+    #main.robo-dinner .spin-button:disabled { cursor:wait; opacity:.72; transform:none; }
+    #main.robo-dinner .hint { text-align:center; color:var(--muted); font-size:12px; margin:10px 0 0; }
+    #main.robo-dinner details { margin-top:22px; border:1px solid var(--line); border-radius:18px; background:rgba(19,16,32,.75); overflow:hidden; }
+    #main.robo-dinner summary { padding:16px 18px; cursor:pointer; font-weight:800; list-style:none; }
+    #main.robo-dinner summary::-webkit-details-marker { display:none; }
+    #main.robo-dinner summary::after { content:"＋"; float:left; color:var(--cyan); }
+    #main.robo-dinner details[open] summary::after { content:"−"; }
+    #main.robo-dinner .table-wrap { overflow-x:auto; padding:0 14px 16px; }
+    #main.robo-dinner table { width:100%; min-width:760px; border-collapse:collapse; font-size:13px; }
+    #main.robo-dinner th, #main.robo-dinner td { padding:10px 11px; text-align:right; vertical-align:top; border-bottom:1px solid var(--line); }
+    #main.robo-dinner th { color:var(--cyan); background:rgba(33,217,232,.06); font-size:12px; }
+    #main.robo-dinner td:first-child { color:var(--purple); font-weight:900; }
+    #main.robo-dinner .points { color:#d8b5ff; white-space:nowrap; }
+    @media (max-width:800px) {
+    #main.robo-dinner { padding-top:28px; }
+    #main.robo-dinner .stage { grid-template-columns:1fr; padding:16px; gap:10px; }
+    #main.robo-dinner .result-panel { padding:18px; }
+    #main.robo-dinner .wheel-box { width:min(100%,440px); }
+    }
+    @media (max-width:440px) {
+    #main.robo-dinner .shell { width:calc(100% - 22px); }
+    #main.robo-dinner .stage { border-radius:20px; }
+    #main.robo-dinner .wheel-legend { gap:5px; }
+    #main.robo-dinner .legend-chip { font-size:10px; padding:5px 7px; }
+    #main.robo-dinner .pick { grid-template-columns:78px 1fr auto; gap:7px; }
+    #main.robo-dinner .pick-value { font-size:13px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+    #main.robo-dinner .ring, #main.robo-dinner .spin-button { transition:none; } }
+  </style>
 </head>
 <body>
 <a class="skip" href="#main">تجاوز إلى المحتوى</a>
-<header class="topbar"><div class="wrap nav"><a class="brand" href="index.html" aria-label="ROBO"><img src="assets/you-vs-robo.webp" alt="YOU VS ROBO"></a><nav id="navlinks" class="navlinks" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="audience.html" class="active">جرّب ROBO</a><a href="restaurants.html">المطاعم</a><a href="creators.html">صنّاع المحتوى</a><a href="contact.html">تواصل</a></nav><div class="nav-actions"><button class="menu" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="القائمة">☰</button></div></div></header>
+<header class="topbar"><div class="wrap nav"><a class="brand" href="index.html" aria-label="ROBO"><img src="assets/you-vs-robo.webp" alt="YOU VS ROBO"></a><nav id="navlinks" class="navlinks" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="audience.html" class="active" aria-current="page">جرّب ROBO</a><a href="restaurants.html">المطاعم</a><a href="creators.html">صنّاع المحتوى</a><a href="contact.html">تواصل</a></nav><div class="nav-actions"><button class="menu" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="القائمة">☰</button></div></div></header>
 
-<main id="main">
-  <section class="page-head wrap">
-    <div class="eyebrow">ROBO DECIDES</div>
-    <h1><span class="gradient-text">خلّ أرقامك تقرر طلبك.</span></h1>
-    <p>أدخل نسبة البطارية وعدد متابعيك، ويستخدم ROBO الدقيقة الحالية ليصنع لك تجربة طعام واضحة.</p>
-  </section>
+<main id="main" class="robo-dinner"><div class="wrap shell">
+    <section class="intro">
+      <div class="eyebrow">ثلاث عجلات، وقرار عشاء واحد</div>
+      <h1><span class="gradient-text">خلّ روبو يغيّر عشاءك</span></h1>
+      <p>أدر العجلات لتعرف كيف تختار المطعم والطبق، وأي قانون تطبّق على طلبك.</p>
+    </section>
 
-  <section class="section compact">
-    <div class="wrap">
-      <div class="process-grid">
-        <article class="process-card"><b>01 · البطارية</b><p>آخر رقم يحدد نوع الأكل.</p></article>
-        <article class="process-card"><b>02 · المتابعون</b><p>آخر رقم يحدد طريقة اختيار المطعم.</p></article>
-        <article class="process-card"><b>03 · الدقيقة</b><p>آخر رقم يحدد اختيار الطبق.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap choice-panel">
-      <div class="eyebrow">START THE EXPERIMENT</div>
-      <h2>رقمان منك. والثالث من الوقت.</h2>
-      <p class="micro">يأخذ ROBO آخر رقم من كل معلومة، ويركّب منها نتيجة واحدة. النتيجة نفسها تظهر دائمًا للأرقام نفسها.</p>
-      <form id="robo-form" class="robo-game">
-        <div class="game-grid">
-          <div class="field"><label for="battery">نسبة البطارية</label><input id="battery" name="battery" type="number" min="0" max="100" inputmode="numeric" placeholder="مثال: 47" required></div>
-          <div class="field"><label for="followers">عدد متابعيك</label><input id="followers" name="followers" type="number" min="0" inputmode="numeric" placeholder="مثال: 1333" required></div>
+    <section class="stage" aria-label="لعبة عجلات روبو">
+      <div class="wheel-side">
+        <div class="wheel-legend" aria-label="مكونات العجلات">
+          <span class="legend-chip"><i class="dot dot-law"></i>قانون روبو</span>
+          <span class="legend-chip"><i class="dot dot-restaurant"></i>اختيار المطعم</span>
+          <span class="legend-chip"><i class="dot dot-dish"></i>اختيار الطبق</span>
         </div>
-        <div class="minute-box"><div><strong id="current-minute">00</strong></div><div><b>الدقيقة الآن</b><br><span class="micro">يحددها ROBO تلقائيًا</span></div></div>
-        <button class="btn primary full" type="submit">اعرض قرار ROBO</button>
-      </form>
-
-      <div id="result" class="result-panel" hidden aria-live="polite">
-        <div class="eyebrow">ROBO RESULT</div><h2>قرار ROBO</h2>
-        <div class="result-grid">
-          <div class="result-item"><span>نوع الأكل</span><strong id="food-result"></strong></div>
-          <div class="result-item"><span>اختيار المطعم</span><strong id="restaurant-result"></strong></div>
-          <div class="result-item"><span>اختيار الطبق</span><strong id="dish-result"></strong></div>
+        <div class="wheel-box">
+          <svg viewBox="0 0 600 600" role="img" aria-label="ثلاث عجلات متداخلة مرقمة من صفر إلى تسعة">
+            <g id="restaurantRing" class="ring outer"></g>
+            <g id="dishRing" class="ring middle"></g>
+            <g id="lawRing" class="ring inner"></g>
+            <circle class="ring-outline" cx="300" cy="300" r="299"></circle>
+            <circle class="ring-outline" cx="300" cy="300" r="218"></circle>
+            <circle class="ring-outline" cx="300" cy="300" r="134"></circle>
+            <circle class="ring-outline" cx="300" cy="300" r="49"></circle>
+            <path class="pointer" d="M282 5 L318 5 L300 34 Z"></path>
+            <circle class="hub" cx="300" cy="300" r="42"></circle>
+            <text class="hub-text" x="300" y="300">ROBO</text>
+          </svg>
         </div>
-        <div class="score-line"><div><b>المجموع</b><p id="win-message" class="micro"></p></div><div id="total-points" class="score-value"></div></div>
-        <div class="game-actions"><button id="explain" class="btn ghost" type="button">كيف حسبها ROBO؟</button><button id="again" class="btn outline" type="button">جرّب أرقامًا أخرى</button></div>
+        <p class="wheel-copy">كل عجلة تختار رقمًا مستقلًا من ٠ إلى ٩</p>
       </div>
 
-      <div id="matrix-wrap" class="matrix-wrap" hidden>
-        <table id="matrix-table" class="matrix-table">
-          <thead><tr><th>آخر رقم</th><th>نوع الأكل</th><th>اختيار المطعم</th><th>اختيار الطبق</th></tr></thead>
-          <tbody></tbody>
+      <div class="result-panel" aria-live="polite">
+        <h2>نتيجة روبو</h2>
+        <p class="result-help">كل رقم يحدد خيارًا من العمود المقابل له في المصفوفة.</p>
+        <div class="pick"><span class="pick-label">القانون</span><span class="pick-value" id="lawValue">أدر العجلات لبدء التحدي</span><span class="pick-number" id="lawNum">—</span></div>
+        <div class="pick"><span class="pick-label">المطعم</span><span class="pick-value" id="restaurantValue">—</span><span class="pick-number" id="restaurantNum">—</span></div>
+        <div class="pick"><span class="pick-label">الطبق</span><span class="pick-value" id="dishValue">—</span><span class="pick-number" id="dishNum">—</span></div>
+        <p class="decision" id="decision">قرار العشاء سيظهر هنا بعد دوران العجلات.</p>
+        <button class="spin-button" id="spinButton" type="button">أدر العجلات 🤖</button>
+        <button class="spin-button" id="dishSpin" type="button" hidden>أعد تدوير عجلة الطبق</button>
+        <p class="hint" id="spinHint">إذا ما لقيت طلبًا يطابق الشرط في المطعم، أعد تدوير عجلة الطبق.</p>
+      </div>
+    </section>
+
+    <details>
+      <summary>افتح مصفوفة روبو</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>رقم</th><th>قانون روبو</th><th>اختيار المطعم</th><th>اختيار الطبق أو الطلب</th></tr></thead>
+          <tbody id="matrixBody"></tbody>
         </table>
       </div>
-    </div>
-  </section>
-
-  <section class="section compact"><div class="wrap statement"><div class="eyebrow">ROBO CHALLENGES</div><h2>ROBO لا يختار فقط…</h2><p>أحيانًا يحوّل الطلب إلى تحدٍّ غير متوقع، بحسب المنيو والتجربة.</p></div></section>
-</main>
-
+    </details>
+  </div></main>
 <footer class="footer"><div class="wrap footer-inner"><div class="footer-brand"><img src="assets/you-vs-robo.webp" alt="YOU VS ROBO"><p>© 2026 ROBO · YouvsRobo.com</p></div><div class="footer-side"><div class="footer-links"><a href="terms.html">شروط الاستخدام</a><a href="participation.html">شروط المشاركة</a><a href="privacy.html">سياسة الخصوصية</a><a href="faq.html">الأسئلة العامة</a></div><div class="social-icons"><a href="https://www.tiktok.com/@youvsrobo" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="assets/tiktok.svg" alt="TikTok"></a><a href="https://www.instagram.com/youvsrobo/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/instagram.svg" alt="Instagram"></a><a href="https://www.youtube.com/@youvsrobo" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="assets/youtube.svg" alt="YouTube"></a></div><div class="footer-contact"><a href="mailto:hello@youvsrobo.com">hello@youvsrobo.com</a><a class="wa-direct" href="https://wa.me/966551932032" target="_blank" rel="noopener noreferrer">واتساب مباشر</a></div></div></div></footer>
 <script src="app.js"></script>
+<script>
+    const laws = [
+      ["اختر للطبق اسم فيلم", 1],
+      ["عيّن للطبق وظيفة غريبة", 1],
+      ["تخيّل شخصية خيالية تجرّب الطبق", 2],
+      ["تذوّق الطبق كمذيع مباراة", 2],
+      ["قدّم الطبق كأنه اختراع غيّر العالم", 2],
+      ["قدّم الطبق للمحكمة واجعله المتهم", 3],
+      ["اختلق معلومة خيالية عن أصل الطبق", 3],
+      ["اخترع للطبق اسمًا جديدًا كأنه في المنيو", 3],
+      ["ادمج طبقين واخترع منهما طبقًا ثالثًا", 4],
+      ["ابحث عن رابط خفي بين الطبق المختار وطبق آخر في المنيو، ثم اخترع قصة تربطهما", 5]
+    ];
+    const restaurants = [
+      ["أقرب مطعم", 1],
+      ["مطعم محفوظ عندك", 2],
+      ["خامس مطعم يظهر في البحث", 3],
+      ["مطعم يرشحه صديق", 2],
+      ["أول مطعم يظهر في حساب تغطيات عشوائي", 3],
+      ["مطعم ظهر في حساب شيف", 3],
+      ["مطعم رشحته التعليقات في فيديو تغطية", 3],
+      ["مطعم ارتبط بترند أكل غريب", 4],
+      ["مطعم كان ترند قبل سنة", 4],
+      ["مطعم ظهر في حساب وصفات عشوائي", 3]
+    ];
+    const dishes = [
+      ["أول طبق في قسم تختاره عشوائيًا", 1],
+      ["طبق لم تجربه", 3],
+      ["أغرب طبق في المنيو", 4],
+      ["طبق ظهرت عليه اختلافات واضحة في آراء الناس", 4],
+      ["طبق ظهر في ترند أكل قديم", 3],
+      ["طبق من ترند أكل غريب", 4],
+      ["أحدث طبق أعلن عنه حساب المطعم", 4],
+      ["مقبلات ومشروب فقط، بدون طبق رئيسي", 3],
+      ["صديقك يختار الطبق", 3],
+      ["أفضل طلب في التعليقات", 2]
+    ];
+    const restaurantActions = [
+      "أختار أقرب مطعم", "أختار مطعمًا من قائمتي المحفوظة",
+      "أختار خامس مطعم يظهر في البحث", "أختار مطعمًا يرشحه لي صديق",
+      "أختار أول مطعم يظهر في حساب تغطيات عشوائي", "أختار مطعمًا ظهر في حساب شيف",
+      "أختار مطعمًا رشّحته التعليقات في فيديو تغطية", "أختار مطعمًا ارتبط بترند أكل غريب",
+      "أختار مطعمًا كان ترند قبل سنة", "أختار مطعمًا ظهر في حساب وصفات عشوائي"
+    ];
+    const dishActions = [
+      "أطلب أول طبق من قسم أختاره عشوائيًا من منيوه", "أطلب طبقًا من منيوه ما جرّبته قبل",
+      "أطلب أغرب طبق في منيوه", "أطلب طبقًا اختلفت عليه الآراء في تعليقاته",
+      "أطلب طبقًا من منيوه ظهر في ترند قديم", "أطلب طبقًا من منيوه ظهر في ترند أكل غريب",
+      "أطلب أحدث طبق أعلن عنه حساب المطعم", "أطلب مقبلات ومشروبًا فقط، وأطبّق القانون على إحدى المقبلات",
+      "أخلّي صديقي يختار لي طبقًا من منيوه", "أطلب أفضل طلب رشّحته التعليقات عن المطعم"
+    ];
+    const lawActions = [
+      "أعطي الطبق اسم فيلم قبل ما أجرّبه", "أعيّن للطبق وظيفة غريبة",
+      "أتخيّل شخصية خيالية تجرّب الطبق", "أعلّق على أول لقمة كأني مذيع مباراة",
+      "أقدّم الطبق كأنه اختراع غيّر العالم", "أقدّم الطبق للمحكمة وأخليه المتهم",
+      "أختلق حكاية خيالية عن أصل الطبق", "أخترع للطبق اسمًا جديدًا كأنه في المنيو",
+      "أدمج الطبق مع صنف آخر من المنيو وأخترع طبقًا ثالثًا",
+      "أبحث عن رابط خفي بين الطبق وصنف آخر من المنيو وأخترع قصة تربطهما"
+    ];
+    const ringSpecs = [
+      { id: "restaurantRing", inner: 220, outer: 298, values: restaurants },
+      { id: "dishRing", inner: 136, outer: 217, values: dishes },
+      { id: "lawRing", inner: 50, outer: 133, values: laws }
+    ];
+    const arabicDigits = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+    const center = 300;
+    const angles = Array.from({length: 10}, (_, i) => -108 + i * 36);
+    const points = (radius, angle) => {
+      const radians = angle * Math.PI / 180;
+      return [center + radius * Math.cos(radians), center + radius * Math.sin(radians)];
+    };
+    function sectorPath(inner, outer, start, end) {
+      const [x1,y1] = points(outer,start), [x2,y2] = points(outer,end);
+      const [x3,y3] = points(inner,end), [x4,y4] = points(inner,start);
+      return `M ${x1} ${y1} A ${outer} ${outer} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${inner} ${inner} 0 0 0 ${x4} ${y4} Z`;
+    }
+    for (const ring of ringSpecs) {
+      const group = document.getElementById(ring.id);
+      ring.values.forEach((_, i) => {
+        const start = angles[i], end = start + 36;
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", sectorPath(ring.inner, ring.outer, start, end));
+        group.appendChild(path);
+        const [x,y] = points((ring.inner + ring.outer) / 2, start + 18);
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("x", x); label.setAttribute("y", y);
+        label.textContent = arabicDigits[i];
+        group.appendChild(label);
+      });
+    }
+    const matrixBody = document.getElementById("matrixBody");
+    for (let i = 0; i < 10; i++) {
+      const tr = document.createElement("tr");
+      const cells = [arabicDigits[i], `${laws[i][0]} <span class="points">— ${laws[i][1]} نقاط</span>`, `${restaurants[i][0]} <span class="points">— ${restaurants[i][1]} نقاط</span>`, `${dishes[i][0]} <span class="points">— ${dishes[i][1]} نقاط</span>`];
+      cells.forEach((html, index) => { const td = document.createElement("td"); if (index === 0) td.textContent = html; else td.innerHTML = html; tr.appendChild(td); });
+      matrixBody.appendChild(tr);
+    }
+    const button = document.getElementById("spinButton");
+    const anglesSoFar = Object.fromEntries(ringSpecs.map(r => [r.id, 0]));
+    const arabicPoints = n => `${n} ${n === 1 ? "نقطة" : "نقاط"}`;
+    function showPick(prefix, value, number) {
+      document.getElementById(prefix + "Value").textContent = value[0];
+      document.getElementById(prefix + "Num").textContent = `${arabicDigits[number]} · ${arabicPoints(value[1])}`;
+    }
+    const dishSpin = document.getElementById("dishSpin");
+    let lastPicks;
+    function spin(dishOnly) {
+      if (button.disabled) return;
+      button.disabled = true;
+      dishSpin.disabled = true;
+      button.textContent = "روبو يختار...";
+      const picks = { law: Math.floor(Math.random()*10), restaurant: Math.floor(Math.random()*10), dish: Math.floor(Math.random()*10) };
+      if (dishOnly) { picks.law = lastPicks.law; picks.restaurant = lastPicks.restaurant; picks.dish = (lastPicks.dish + 1 + Math.floor(Math.random() * 9)) % 10; }
+      const selected = { law: laws[picks.law], restaurant: restaurants[picks.restaurant], dish: dishes[picks.dish] };
+      for (const spec of ringSpecs) {
+        let key = spec.id === "lawRing" ? "law" : spec.id === "dishRing" ? "dish" : "restaurant";
+        if (dishOnly && key !== "dish") continue;
+        const target = (360 - (picks[key] * 36) + 360) % 360;
+        const current = ((anglesSoFar[spec.id] % 360) + 360) % 360;
+        const delta = 5 * 360 + ((target - current + 360) % 360);
+        anglesSoFar[spec.id] += delta;
+        document.getElementById(spec.id).style.transform = `rotate(${anglesSoFar[spec.id]}deg)`;
+      }
+      window.setTimeout(() => {
+        showPick("law", selected.law, picks.law);
+        showPick("restaurant", selected.restaurant, picks.restaurant);
+        showPick("dish", selected.dish, picks.dish);
+        const total = selected.law[1] + selected.restaurant[1] + selected.dish[1];
+        document.getElementById("decision").innerHTML = `أنا قررت عشاء اليوم: ${restaurantActions[picks.restaurant]}، و${dishActions[picks.dish]}، ثم ${lawActions[picks.law]}. <span class="score">المجموع: ${arabicPoints(total)}</span>`;
+        lastPicks = picks;
+        dishSpin.hidden = false;
+        dishSpin.disabled = false;
+        button.disabled = false;
+        button.textContent = "أدر العجلات مرة ثانية 🤖";
+      }, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 4300);
+    }
+    button.addEventListener("click", () => spin(false));
+    dishSpin.addEventListener("click", () => spin(true));
+  </script>
 </body>
 </html>
