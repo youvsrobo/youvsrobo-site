@@ -74,6 +74,11 @@
     #main.robo-dinner .pick-value { font-weight:700; font-size:14px; }
     #main.robo-dinner .pick-number { color:var(--cyan); font-size:12px; font-weight:800; }
     #main.robo-dinner .decision { margin:16px 0 0; padding:13px 14px; border-radius:14px; background:rgba(112,38,217,.18); border:1px solid rgba(168,85,247,.28); font-size:14px; }
+    #main.robo-dinner .points-challenge { margin:0 0 24px; padding:18px 22px; border:1px solid rgba(168,85,247,.35); border-radius:18px; background:var(--panel); }
+    #main.robo-dinner .points-challenge h2 { margin:0 0 7px; font-size:22px; }
+    #main.robo-dinner .points-challenge p { margin:5px 0; }
+    #main.robo-dinner .points-challenge-meta { color:var(--muted); font-size:13px; }
+    #main.robo-dinner .points-challenge a { color:var(--cyan); text-decoration:underline; text-underline-offset:.22em; }
     #main.robo-dinner .score { color:var(--cyan); font-weight:900; }
     #main.robo-dinner .spin-button {
       width:100%; margin-top:18px; border:0; border-radius:14px; padding:13px 18px;
@@ -121,6 +126,13 @@
       <div class="eyebrow">ثلاث عجلات، وقرار عشاء واحد</div>
       <h1><span class="gradient-text">خلّ روبو يغيّر عشاءك</span></h1>
       <p>أدر العجلات لتعرف كيف تختار المطعم والطبق، وأي قانون تطبّق على طلبك.</p>
+    </section>
+
+    <section class="points-challenge" aria-labelledby="points-challenge-title">
+      <h2 id="points-challenge-title">مين يجمع أكثر نقاط؟</h2>
+      <p>لفّ العجلة واحفظ صورة النتيجة. نفّذ قرار العشاء وطبّق قانون روبو، ثم أرسل فيديو التنفيذ وصورة النتيجة إلى <a href="https://www.tiktok.com/@youvsrobo" target="_blank" rel="noopener noreferrer">@youvsrobo</a>.</p>
+      <p>أنا أحسب نقاط التحديات اللي نفّذتوها وصوّرتوها. واللي يتصدّر، أخلّي الجمهور يختار له هدية في التعليقات. وش تهدونه؟ 🤖</p>
+      <p class="points-challenge-meta"><a href="participation.html">شروط المشاركة</a></p>
     </section>
 
     <section class="stage" aria-label="لعبة عجلات روبو">
@@ -300,7 +312,7 @@
         showPick("restaurant", selected.restaurant, picks.restaurant);
         showPick("dish", selected.dish, picks.dish);
         const total = selected.law[1] + selected.restaurant[1] + selected.dish[1];
-        document.getElementById("decision").innerHTML = `أنا قررت عشاء اليوم: ${restaurantActions[picks.restaurant]}، و${dishActions[picks.dish]}، ثم ${lawActions[picks.law]}. <span class="score">المجموع: ${arabicPoints(total)}</span>`;
+        document.getElementById("decision").innerHTML = `أنا قررت عشاء اليوم: ${restaurantActions[picks.restaurant]}، و${dishActions[picks.dish]}، ثم ${lawActions[picks.law]}. <span class="score">نقاط الجولة بعد اعتماد الفيديو: ${arabicPoints(total)}</span>`;
         lastPicks = picks;
         dishSpin.hidden = false;
         dishSpin.disabled = false;
